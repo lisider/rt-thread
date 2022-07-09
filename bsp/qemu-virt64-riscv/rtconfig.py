@@ -15,7 +15,7 @@ if os.getenv('RTT_CC'):
 
 if  CROSS_TOOL == 'gcc':
     PLATFORM    = 'gcc'
-    EXEC_PATH   = r'/home/lizhirui/workspace/riscv64-toolchains/bin'
+    EXEC_PATH   = r'/opt/toolchain/riscv/riscv64-unknown-elf/sifive/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin'
 else:
     print('Please make sure your toolchains is GNU GCC!')
     exit(0)
