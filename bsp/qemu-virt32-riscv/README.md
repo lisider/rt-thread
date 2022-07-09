@@ -34,7 +34,7 @@ The project provides two configurable operating modes for riscv64, defaults to r
 
 ***M-Mode***
 
-Firstly, install the `qemu-system-riscv64`.
+Firstly, install the `qemu-system-riscv32`.
 
 ```
 sudo apt install qemu-system-misc
@@ -93,7 +93,7 @@ make PLATFORM=generic CROSS_COMPILE=~/gcc/bin/riscv64-unknown-elf-
 Enter the following command to run:
 
 ```
-qemu-system-riscv64 -nographic -machine virt -m 256M -kernel rtthread.bin -bios ~/opensbi/build/platform/generic/firmware/fw_jump.elf
+qemu-system-riscv32 -nographic -machine virt -m 256M -kernel rtthread.bin -bios ~/opensbi/build/platform/generic/firmware/fw_jump.elf
 ```
 
 Result is shown as follows: 

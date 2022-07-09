@@ -47,7 +47,7 @@
 #define RT_CONSOLEBUF_SIZE 256
 #define RT_CONSOLE_DEVICE_NAME "uart"
 #define RT_VER_NUM 0x40100
-#define ARCH_CPU_64BIT
+#define ARCH_CPU_32BIT
 #define ARCH_RISCV
 #define ARCH_RISCV64
 

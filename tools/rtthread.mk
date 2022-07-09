@@ -125,7 +125,9 @@ else
 $(TARGET): $(OBJS)
 	@echo ------------------------------------------------
 	@echo link $(TARGET)
-	@$(CROSS_COMPILE)g++ -o $@ $(LFLAGS) $(OBJS) $(EXTERN_LIB)
+	@$(CROSS_COMPILE)gcc -o $@ $(LFLAGS) $(OBJS) $(EXTERN_LIB)
+	@echo objdump $(TARGET)
+	@$(CROSS_COMPILE)objdump -D $(TARGET) > $(TARGET).asm
 	@echo ------------------------------------------------
 	@$(CROSS_COMPILE)objcopy -O binary $@ rtthread.bin
 	@$(CROSS_COMPILE)size $@

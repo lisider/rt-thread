@@ -34,7 +34,7 @@ scons
 
 *M-Mode*
 
-首先安装`qemu-system-riscv64`。
+首先安装`qemu-system-riscv32`。
 
 ```
 sudo apt install qemu-system-misc
@@ -86,7 +86,7 @@ make PLATFORM=generic CROSS_COMPILE=~/gcc/bin/riscv64-unknown-elf-
 输入以下的命令即可运行:
 
 ```
-qemu-system-riscv64 -nographic -machine virt -m 256M -kernel rtthread.bin -bios ~/opensbi/build/platform/generic/firmware/fw_jump.elf
+qemu-system-riscv32 -nographic -machine virt -m 256M -kernel rtthread.bin -bios ~/opensbi/build/platform/generic/firmware/fw_jump.elf
 ```
 可以看到如下的结果
 ```
