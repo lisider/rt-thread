@@ -103,6 +103,10 @@ Simple(){
         cd ${TOP_DIR}
         [ -e ${FILE_OBJ%.*}.c ] && echo ${FILE_OBJ%.*}.c && cp ${FILE_OBJ%.*}.c ../${SIMPLE_PRO_NAME} --parents
         [ -e ${FILE_OBJ%.*}.S ] && echo ${FILE_OBJ%.*}.S && cp ${FILE_OBJ%.*}.S ../${SIMPLE_PRO_NAME} --parents
+
+        [ -e ${FILE_OBJ%/*}/SConscript ] && echo ${FILE_OBJ%/*}/SConscript && cp ${FILE_OBJ%/*}/SConscript ../${SIMPLE_PRO_NAME} --parents
+        [ -e ${FILE_OBJ%/*}/SConstruct ] && echo ${FILE_OBJ%/*}/SConstruct && cp ${FILE_OBJ%/*}/SConstruct ../${SIMPLE_PRO_NAME} --parents
+
         cd -
     done
 
@@ -114,12 +118,19 @@ Simple(){
         sed 's/://'                 |                       \
         while read line
         do
-            FULL_PATH=${line}
+            echo ${line} | egrep "/home/" > /dev/null
+            if [ $? -eq 0 ];then
+                FULL_PATH=${line}
+            else
+                FULL_PATH=`realpath ${line}`
+            fi
             echo ${FULL_PATH}
 
             FILE_OBJ=$(echo ${FULL_PATH} | sed "s/${PATH_FOR_SED}//g")
             cd ${TOP_DIR}
             [ -e ${FILE_OBJ} ] && echo ${FILE_OBJ} && cp ${FILE_OBJ} ../${SIMPLE_PRO_NAME} --parents
+            [ -e ${FILE_OBJ%/*}/SConscript ] && echo ${FILE_OBJ%/*}/SConscript && cp ${FILE_OBJ%/*}/SConscript ../${SIMPLE_PRO_NAME} --parents
+            [ -e ${FILE_OBJ%/*}/SConstruct ] && echo ${FILE_OBJ%/*}/SConstruct && cp ${FILE_OBJ%/*}/SConstruct ../${SIMPLE_PRO_NAME} --parents
             cd -
         done
     done
@@ -127,11 +138,26 @@ Simple(){
     # 3.3 other file
     FILE_ISSUE+=" do_rtthread.sh  rtconfig.py "
     FILE_ISSUE+=" link.lds  link_stacksize.lds "
-    FILE_ISSUE+=" config.mk src.mk "
-    FILE_ISSUE+=" SConscript SConstruct "
     for file in ${FILE_ISSUE};do
         [ -f ${file}  ] && cp ${file} ${SIMPLE_PRO_DIR}/bsp/${PRO_NAME}
     done
+
+    # 3.4 dirs
+    DIR_ISSUE+=" tools "
+    cd ${TOP_DIR}
+    for file in ${DIR_ISSUE};do
+        [ -d ${file}  ] && cp ${file} ../${SIMPLE_PRO_NAME} --parents -r
+    done
+    cd -
+
+    # 3.5 SConscript & SConstruct
+    cd ${SIMPLE_PRO_DIR}
+    find . -type d | while read -r FILE_READ ; do
+    [ -f ../rt-thread/${FILE_READ}/SConscript ] && cp ../rt-thread/${FILE_READ}/SConscript ${FILE_READ}
+    [ -f ../rt-thread/${FILE_READ}/SConstruct ] && cp ../rt-thread/${FILE_READ}/SConstruct ${FILE_READ}
+    done
+    cd -
+
 }
 
 Simple_with_log(){

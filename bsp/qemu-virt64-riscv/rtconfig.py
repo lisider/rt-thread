@@ -39,8 +39,8 @@ if PLATFORM == 'gcc':
     OBJCPY  = PREFIX + 'objcopy'
 
     DEVICE  = ' -mcmodel=medany -march=rv64imafdc -mabi=lp64d'
-    CFLAGS  = DEVICE + ' -fvar-tracking -ffreestanding -fno-common -ffunction-sections -fdata-sections -fstrict-volatile-bitfields '
-    AFLAGS  = ' -c' + DEVICE + ' -x assembler-with-cpp'
+    CFLAGS  = DEVICE + ' -fvar-tracking -ffreestanding -fno-common -ffunction-sections -fdata-sections -fstrict-volatile-bitfields -MMD -MP'
+    AFLAGS  = ' -c' + DEVICE + ' -x assembler-with-cpp -MMD -MP'
     LFLAGS  = DEVICE + ' -nostartfiles -Wl,--gc-sections,-Map=rtthread.map,-cref,-u,_start -T link.lds -lc -lm '
     CPATH   = ''
     LPATH   = ''
