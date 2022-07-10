@@ -18,10 +18,14 @@
 #define STORE                   sd
 #define LOAD                    ld
 #define REGBYTES                8
+#define MCAUSE_MASK             0xFFFFFFFF
+#define XLEN                    64
 #else
 #define STORE                   sw
 #define LOAD                    lw
 #define REGBYTES                4
+#define MCAUSE_MASK             0x7FFFFFFF
+#define XLEN                    32
 #endif
 
 #ifdef RISCV_U_MODE

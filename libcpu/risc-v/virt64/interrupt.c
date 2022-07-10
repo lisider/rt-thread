@@ -13,6 +13,7 @@
 #include "encoding.h"
 #include "riscv.h"
 #include "interrupt.h"
+#include "cpuport.h"
 
 #define MAX_HANDLERS    128
 
@@ -180,10 +181,10 @@ void dump_regs(struct rt_hw_stack_frame *regs)
 
 void handle_trap(rt_size_t xcause,rt_size_t xtval,rt_size_t xepc,struct rt_hw_stack_frame *sp)
 {
-    int cause = (xcause & 0xFFFFFFFF);
+    int cause = (xcause & MCAUSE_MASK);
     int plic_irq = 0;
 
-    if (xcause & (1UL << 63))
+    if (xcause & (1UL << (XLEN-1)))
     {
         switch (cause)
         {
